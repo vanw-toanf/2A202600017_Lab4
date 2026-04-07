@@ -82,39 +82,27 @@ Bạn: Tôi ở Hà Nội , muốn đi Phú Quốc 2 đêm, buget 5 triệu. Tư
 
 TravelBuddy đang suy nghĩ...
 Gọi tool: search_flights({'origin': 'Hà Nội', 'destination': 'Phú Quốc'})
-Gọi tool: search_hotels({'city': 'Phú Quốc', 'max_price_per_night': 2500000})
+Gọi tool: search_hotels({'city': 'Phú Quốc'})
+Gọi tool: calculate_budget({'total_budget': 5000000, 'expenses': 'vé_máy_bay:1100000,khách_sạn:640000'})
 Trả lời trực tiếp
 
-TravelBuddy: Dưới đây là phương án chuyến đi cho bạn từ Hà Nội đến Phú Quốc trong 2 đêm, với ngân sách 5 triệu:
+TravelBuddy: Dưới đây là kế hoạch chuyến đi từ Hà Nội đến Phú Quốc trong 2 đêm với ngân sách 5 triệu đồng của bạn:
 
 **Chuyến bay:**
-1. **VietJet Air** | 16:00 - 18:15 | economy | **1.100.000đ**
-2. **VietJet Air** | 10:00 - 12:15 | economy | **1.350.000đ**
-3. **Vietnam Airlines** | 07:00 - 09:15 | economy | **2.100.000đ**
+1. **VietJet Air** | 16:00 - 18:15 | Economy | **1.100.000đ**
 
-**Khách sạn (cho 2 đêm):**
-1. **9Station Hostel** | 2⭐ | Dương Đông | Rating 4.5 | **200.000đ/đêm** → Tổng 400.000đ cho 2 đêm.
-2. **Sol by Meliá** | 4⭐ | Bãi Trường | Rating 4.2 | **1.500.000đ/đêm** → Tổng 3.000.000đ cho 2 đêm.
-3. **Lahana Resort** | 3⭐ | Dương Đông | Rating 4.0 | **800.000đ/đêm** → Tổng 1.600.000đ cho 2 đêm.
+**Khách sạn:**
+1. **9Station Hostel** | 2⭐ | Dương Đông | Rating 4.5 | **200.000đ/đêm**
+   - Dành cho 2 đêm, tổng chi phí là **400.000đ**.
 
 **Tổng chi phí ước tính:**
-- **Chọn chuyến bay VietJet Air (1.100.000đ):**
-  - Vé máy bay: 1.100.000đ
-  - Khách sạn 9Station Hostel: 400.000đ
-  - **Tổng: 1.500.000đ**
+- Vé máy bay: **1.100.000đ**
+- Khách sạn: **400.000đ**
+- **Tổng chi:** **1.500.000đ**
 
-- **Chọn chuyến bay VietJet Air (1.350.000đ):**
-  - Vé máy bay: 1.350.000đ
-  - Khách sạn 9Station Hostel: 400.000đ
-  - **Tổng: 1.750.000đ**
+**Ngân sách còn lại:** **3.500.000đ**
 
-- **Chọn chuyến bay Vietnam Airlines (2.100.000đ):**
-  - Vé máy bay: 2.100.000đ
-  - Khách sạn 9Station Hostel: 400.000đ
-  - **Tổng: 2.500.000đ**
-
-**Gợi ý thêm:**
-Bạn có thể chọn chuyến bay với giá rẻ hơn và lưu trú tại khách sạn rẻ để tiết kiệm chi phí, hoặc nếu muốn thoải mái hơn, bạn có thể chọn các khách sạn 4⭐ như Sol by Meliá nhưng sẽ làm bạn vượt ngân sách. Hãy cho mình biết bạn thấy phương án nào phù hợp nhé!
+Gợi ý thêm: Bạn có thể dùng ngân sách còn lại cho các hoạt động vui chơi, ăn uống hoặc thuê xe khám phá đảo. Nếu bạn cần thông tin thêm về các hoạt động tại Phú Quốc, mình sẵn sàng hỗ trợ!
 
 Bạn: quit
 ```

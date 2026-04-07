@@ -1,5 +1,6 @@
 import sys
 import os
+import re
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -30,6 +31,53 @@ tools_list = [search_flights, search_hotels, calculate_budget]
 llm = ChatOpenAI(model="gpt-4o-mini")
 llm_with_tools = llm.bind_tools(tools_list)
 
+
+def _message_content_to_text(content) -> str:
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, dict) and item.get("type") == "text":
+                parts.append(str(item.get("text", "")))
+            else:
+                parts.append(str(item))
+        return " ".join(parts)
+    return str(content)
+
+
+def _latest_user_text(messages: list) -> str:
+    for message in reversed(messages):
+        if isinstance(message, tuple) and len(message) >= 2:
+            role = str(message[0]).lower()
+            if role in {"human", "user"}:
+                return str(message[1])
+
+        message_type = getattr(message, "type", "")
+        if message_type in {"human", "user"}:
+            return _message_content_to_text(getattr(message, "content", ""))
+    return ""
+
+
+def _is_budget_related(text: str) -> bool:
+    if not text:
+        return False
+    normalized = text.lower().strip()
+    patterns = [
+        r"\bbudget\b",
+        r"\bbuget\b",
+        r"ngân\s*sách",
+        r"chi\s*phí",
+        r"tổng\s*chi",
+        r"bao\s*nhiêu\s*tiền",
+        r"vượt\s*ngân\s*sách",
+    ]
+    return any(re.search(pattern, normalized) for pattern in patterns)
+
+
+def _has_tool_call(response, tool_name: str) -> bool:
+    return any(tool_call.get("name") == tool_name for tool_call in (response.tool_calls or []))
+
 # 4. Agent Node
 def agent_node(state: AgentState):
     messages = state.get("messages", [])
@@ -39,7 +87,18 @@ def agent_node(state: AgentState):
     if not isinstance(messages[0], SystemMessage):
         messages = [SystemMessage(content=SYSTEM_PROMPT)] + messages
     
+    latest_user_text = _latest_user_text(messages)
     response = llm_with_tools.invoke(messages)
+
+    if _is_budget_related(latest_user_text) and not _has_tool_call(response, "calculate_budget"):
+        force_budget_instruction = SystemMessage(
+            content=(
+                "Yêu cầu bắt buộc: nếu người dùng đề cập ngân sách/chi phí (kể cả viết sai như 'buget'), "
+                "bạn phải gọi tool calculate_budget trước khi trả lời cuối. "
+                "Nếu thiếu dữ liệu thành phần, hãy gọi tool cần thiết để lấy dữ liệu rồi gọi calculate_budget."
+            )
+        )
+        response = llm_with_tools.invoke(messages + [force_budget_instruction])
     
     # === LOGGING ===
     if response.tool_calls:

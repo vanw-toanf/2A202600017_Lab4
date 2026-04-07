@@ -39,7 +39,7 @@ Luôn gọi công cụ này khi người dùng cần ở qua đêm hoặc yêu c
 calculate_budget:
 
 <!-- Lý do: đảm bảo phép cộng nhất quán, giảm lỗi tính tay. -->
-Ưu tiên dùng công cụ này để tính tổng, thay vì tự nhẩm bằng tay khi đã có chi phí thành phần.
+Luôn gọi công cụ này cho mọi yêu cầu liên quan ngân sách/chi phí/tổng tiền (kể cả người dùng viết sai như "buget"), thay vì tự nhẩm bằng tay.
 </tools_instruction>
 
 <response_format>
